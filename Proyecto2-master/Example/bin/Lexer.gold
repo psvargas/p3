@@ -222,6 +222,9 @@ end
 	M.delta(5,42,"Rpt:").ignore()
 	M.delta(42,5,"B").push("$")
 	M.delta(5,43,"tms:").ignore()
+	M.delta(48,43,"tms:").ignore()
+	M.delta(48,5,";").ignore()
+
 	M.delta(43,44,"num").ignore()
 	M.delta(43,50,"var").ignore()
 	//M.delta(47,48,"E").pop("$")
