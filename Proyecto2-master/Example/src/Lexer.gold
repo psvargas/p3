@@ -8,8 +8,8 @@ using gold.visualization.automaton.*
 procedure main(args:String[]) begin
     lexer = createTransducer()
     parser = createAutomaton()
-    //testLexer(lexer)
 	 GAutomataFrame.show(lexer)
+	GAutomataFrame.show(parser)
 	 testParser(lexer,parser) 
 end
   
@@ -26,7 +26,8 @@ procedure testParser(M:ITransducer, P: IAutomaton) begin
 		print "Enter an input string ending with a blank space: "
 		while(sc.hasNextLine()) do
 			linea := sc.nextLine()
-			if linea.isEmpty() then break	
+			if linea.isEmpty() then 
+				break	
 			end
 			input = input + linea + "\n"
 		end
@@ -45,11 +46,11 @@ end
 		
 
  function createAutomaton():IPushdownAutomaton begin
-	Q:=(1‥48)
+	Q:=(1‥50)
 	Σ:={'!','(',')', 'R', 'V', 'B', 'E', 'A','v','n','m','D','T','f','b',
 		't','l','r','a','F','o','s','w','e','P','p','g','c','S','I','W',
-		'X','Y','M','N',' ',';',',',':','i','h'}
-	Γ:={'1','$','n','r','i','w','c'}
+		'X','Y','M','N',' ',';',',',':','\n','\t','i','h'} ∪ ('a' ‥ 'z') ∪ ('A' ‥ 'Z')
+	Γ:={'$'}
 	q₀:=1
 	F:={48}
 	M:=GPushdownAutomaton(Q,Σ,Γ,q₀,F)
@@ -63,92 +64,151 @@ end
 	M.delta(4,5,"B").push("$")
 	
 	M.delta(5,6,"A").ignore()
-	M.delta(6,7,"(").ignore()
-	M.delta(7,8,"v").ignore()
-	M.delta(8,9,",").ignore()
-	M.delta(9,10,"n").ignore()
+	//M.delta(6,7,":").ignore()
+	M.delta(6,8,"num").ignore()
+	M.delta(8,9,"to").ignore()
+	M.delta(9,10,"var").ignore()
+	M.delta(10,5,";").ignore()
+	M.delta(10,48,"E").pop("$")
 	
-	M.delta(10,11,")").ignore()
-	M.delta(11,5,";").ignore()
-	M.delta(11,48,"E").pop("$")
+	M.delta(5,11,"M").ignore()
+	M.delta(11,22,"num").ignore()
+	M.delta(11,45,"var").ignore()
+	M.delta(45,5,";").ignore()
+	M.delta(45,48,"E").pop("$")
+	M.delta(22,5,";").ignore()
+	M.delta(22,48,"E").pop("$")
 	
-	M.delta(5,12,"M").ignore()
-	M.delta(12,13,"(").ignore()
+	M.delta(45,12,"To").ignore()
+	M.delta(45,13,"Dir").ignore()
+	M.delta(22,12,"To").ignore()
+	M.delta(22,13,"Dir").ignore()
 	
-	M.delta(13,10,"n").ignore()
-	M.delta(13,10,"v").ignore()
+	M.delta(12,14,"b").ignore()
+	M.delta(12,15,"f").ignore()
+	M.delta(12,16,"r").ignore()
+	M.delta(12,17,"l").ignore()
+	M.delta(14,5,";").ignore()
+	M.delta(15,5,";").ignore()
+	M.delta(16,5,";").ignore()
+	M.delta(17,5,";").ignore()
+	M.delta(14,48,"E").pop("$")
+	M.delta(15,48,"E").pop("$")
+	M.delta(16,48,"E").pop("$")
+	M.delta(17,48,"E").pop("$")
 	
-	M.delta(13,14,"n").ignore()
-	M.delta(13,14,"v").ignore()
-	M.delta(14,15,",").ignore()
-	M.delta(15,10,"b").ignore()
+	M.delta(13,18,"n").ignore()
+	M.delta(13,19,"s").ignore()
+	M.delta(13,20,"e").ignore()
+	M.delta(13,21,"w").ignore()
+	M.delta(18,5,";").ignore()
+	M.delta(19,5,";").ignore()
+	M.delta(20,5,";").ignore()
+	M.delta(21,5,";").ignore()
+	M.delta(18,48,"E").pop("$")
+	M.delta(19,48,"E").pop("$")
+	M.delta(20,48,"E").pop("$")
+	M.delta(21,48,"E").pop("$")
 	
-	M.delta(5,16,"T").ignore()
-	M.delta(16,17,"(").ignore()
-	M.delta(17,10,"t").ignore()
-	M.delta(17,10,"h").ignore()
+	M.delta(5,23,"t").ignore()
+	M.delta(23,16,"r").ignore()
+	M.delta(23,17,"l").ignore()
+	M.delta(23,24,"a").ignore()
+	M.delta(24,5,";").ignore()
+	M.delta(24,48,"E").pop("$")
 	
-	M.delta(5,32,"F").ignore()
-	M.delta(32,15,"(").ignore()
 	
-	M.delta(5,18,"P").ignore()
-	M.delta(18,19,"(").ignore()
-	M.delta(19,20,"p").ignore()
-	M.delta(20,21,",").ignore()
-	M.delta(21,10,"n").ignore()
-	M.delta(21,10,"v").ignore()
 	
-	M.delta(5,22,"D").ignore()
-	M.delta(22,23,"(").ignore()
-	M.delta(23,24,"n").ignore()
-	M.delta(23,24,"v").ignore()
-	M.delta(24,25,",").ignore()
-	M.delta(25,10,"d").ignore()
-	M.delta(25,10,"h").ignore()
-	
-	M.delta(5,11,"S").ignore()
-	
-	M.delta(5,26,"I").ignore()
-	M.delta(26,27,"(").push("i")
-	
-	M.delta(27,28,"f").ignore()
-	M.delta(28,29,"(").ignore()
-	M.delta(29,30,"b").ignore()
-	
-	M.delta(27,33,"c").ignore()
-	M.delta(33,34,"(").ignore()
-	M.delta(34,35,"p").ignore()
-	M.delta(35,36,",").ignore()
-	M.delta(36,30,"v").ignore()
-	M.delta(36,30,"n").ignore()
-	
-	M.delta(27,37,"m").ignore()
-	M.delta(37,38,"(").ignore()
-	M.delta(38,30,"b").ignore()
-	
-	M.delta(30,31,")").ignore()
-	
-	M.delta(27,39,"n").ignore()
-	M.delta(39,27,"(").push("n")
-	M.delta(31,31,")").pop("n")
-	
-	M.delta(31,40,",").pop("i")
-	M.delta(40,5,"B").push("1")
-	M.delta(11,41,"E").pop("1")
-	M.delta(41,42,",").ignore()
-	M.delta(42,5,"B").push("c")
-	M.delta(11,47,"E").pop("c")
-	M.delta(47,11,")").ignore()
+	M.delta(5,25,"fa").ignore()
+	M.delta(25,18,"n").ignore()
+	M.delta(25,19,"s").ignore()
+	M.delta(25,20,"e").ignore()
+	M.delta(25,21,"w").ignore()
 
-	M.delta(5,43,"W").ignore()
-	M.delta(43,27,"(").push("w")
-	M.delta(31,42,",").pop("w")
 	
-	M.delta(5,44,"r").ignore()
-	M.delta(44,45,"(").push("r")
-	M.delta(45,46,"n").ignore()
-	M.delta(45,46,"v").ignore()
-	M.delta(46,42,",").pop("r")
+	M.delta(5,26,"P").ignore()
+	M.delta(26,27,"num").ignore()
+	M.delta(26,46,"var").ignore()
+	M.delta(46,28,"of").ignore()
+	M.delta(27,28,"of").ignore()
+	M.delta(28,29,"Ba").ignore()
+	M.delta(28,30,"Ch").ignore()
+	M.delta(29,5,";").ignore()
+	M.delta(30,5,";").ignore()
+	M.delta(29,48,"E").pop("$")
+	M.delta(30,48,"E").pop("$")
+	
+	M.delta(5,31,"p").ignore()
+	M.delta(31,27,"num").ignore()
+	M.delta(31,46,"var").ignore()
+	
+	
+	M.delta(5,32,"if").ignore()
+	M.delta(32,33,"Fcn").ignore()
+	M.delta(33,18,"n").ignore()
+	M.delta(33,19,"s").ignore()
+	M.delta(33,20,"e").ignore()
+	M.delta(33,21,"w").ignore()
+	M.delta(18,34,"Th").ignore()
+	M.delta(19,34,"Th").ignore()
+	M.delta(20,34,"Th").ignore()
+	M.delta(21,34,"Th").ignore()
+	
+	M.delta(32,35,"cPu").ignore()
+	M.delta(35,38,"num").ignore()
+	M.delta(35,47,"var").ignore()
+	M.delta(32,36,"cPi").ignore()
+	M.delta(36,38,"num").ignore()
+	M.delta(36,47,"var").ignore()
+	M.delta(38,49,"of").ignore()
+	M.delta(47,49,"of").ignore()
+    M.delta(49,29,"Ba").ignore()
+	M.delta(49,30,"Ch").ignore()
+	M.delta(30,34,"Th").ignore()
+	M.delta(29,34,"Th").ignore()
+	
+	
+	M.delta(32,37,"cM").ignore()
+	M.delta(37,38,"num").ignore()
+	M.delta(37,47,"var").ignore()
+	M.delta(38,34,"Th").ignore()
+	M.delta(47,34,"Th").ignore()
+
+	M.delta(32,33,"!").ignore()
+	M.delta(32,35,"!").ignore()
+	M.delta(32,36,"!").ignore()
+	M.delta(32,37,"!").ignore()
+	
+	M.delta(34,5,"B").push("$")
+	M.delta(48,39,"El").ignore()
+	M.delta(39,5,"B").push("$")
+	
+	M.delta(5,40,"Wh").ignore()
+	M.delta(40,33,"Fcn").ignore()
+	M.delta(40,35,"cPu").ignore()
+	M.delta(40,36,"cPi").ignore()
+	M.delta(40,37,"cM").ignore()
+	M.delta(40,33,"!").ignore()
+	M.delta(40,35,"!").ignore()
+	M.delta(40,36,"!").ignore()
+	M.delta(40,37,"!").ignore()
+	M.delta(18,41,"Do").ignore()
+	M.delta(19,41,"Do").ignore()
+	M.delta(20,41,"Do").ignore()
+	M.delta(21,41,"Do").ignore()
+	M.delta(41,5,"B").push("$")
+	
+	
+	M.delta(5,42,"Rpt").ignore()
+	M.delta(42,5,"B").push("$")
+	M.delta(5,43,"tms").ignore()
+	M.delta(43,44,"num").ignore()
+	M.delta(43,50,"var").ignore()
+	M.delta(50,48,"E").pop("$")
+	M.delta(44,48,"E").pop("$")
+	M.delta(44,5,";").ignore()
+	M.delta(50,5,";").ignore()
+
 	
 	return M
 end
@@ -162,7 +222,7 @@ function createTransducer():ITransducer begin
 
 	
 	//preKW := {"p", "pl" ,"plu", "plus", "t", "ti" ,"tim", "time", "times"} // prefixes of keywords
-	Q:= {"I" ,"R", "RO" ,"ROB", "ROBO", "ROBOT", "ROBOT_", "ROBOT_R" ,"V", "VA", "VAR", "VARS", "B", "BE", "BEG", 
+	Q:= {";","I" ,"R", "RO" ,"ROB", "ROBO", "ROBOT", "ROBOT_", "ROBOT_R" ,"V", "VA", "VAR", "VARS", "B", "BE", "BEG", 
 	"BEGI","BEGIN","E", "EN", "END", "a", "as", "ass", "assi", "assig", "assign","var", "num", "m", "mo", "mov", 
 	"move", "i", "in", "inD", "inDi", "inDir","t","to", "toT", "toTh","toThe", "f", "fr","fro", "fron", "front", 
 	"b", "ba", "bac", "back", "t", "tu", "tur", "turn","l", "le", "lef", "left", "r", "ri", "rig", "righ", "right", 
@@ -175,7 +235,7 @@ function createTransducer():ITransducer begin
 	
 	
 	Σ₀:=('0'‥'9') ∪ ('a' ‥ 'z') ∪ ('A' ‥ 'Z')
-	Σ:= Σ₀ ∪ {':', ' ', ',', '\n', '\t', '_'} 
+	Σ:= Σ₀ ∪ {':',';', ' ', ',', '\n', '\t', '_'} 
 	Out:={'!','(',')', 'R', 'V', 'B', 'E', 'A','v','n','m','D','T','f','b',
 		't','l','r','a','F','o','s','w','e','P','p','g','c','S','I','W',
 		'X','Y','M','N',' ',';',',',':','\n','\t','i','h'} ∪ ('a' ‥ 'z') ∪ ('A' ‥ 'Z')
@@ -409,6 +469,7 @@ function h(q,σ) begin
 		elseif q=="BEGIN" then return "B"+s
 		elseif q=="END" then return "E"+s
 		elseif q=="assign" then return "A"+s
+		elseif q=="to" then return "to"+s
 		elseif q=="move" then return "M"+s
 		elseif q=="inDir" then return "Dir"+s
 		elseif q=="toThe" then return "To"+s
