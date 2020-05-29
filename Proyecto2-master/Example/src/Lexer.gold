@@ -46,7 +46,7 @@ end
 		
 
  function createAutomaton():IPushdownAutomaton begin
-	Q:=(1‥50)
+	Q:=(1‥51)
 	Σ:={'!','(',')', 'R', 'V', 'B', 'E', 'A','v','n','m','D','T','f','b',
 		't','l','r','a','F','o','s','w','e','P','p','g','c','S','I','W',
 		'X','Y','M','N',' ',';',',',':','\n','\t','i','h'} ∪ ('a' ‥ 'z') ∪ ('A' ‥ 'Z')
@@ -189,10 +189,11 @@ end
 	M.delta(38,34,"Th:").ignore()
 	M.delta(47,34,"Th:").ignore()
 
-	M.delta(32,33,"!:").ignore()
-	M.delta(32,35,"!:").ignore()
-	M.delta(32,36,"!:").ignore()
-	M.delta(32,37,"!:").ignore()
+	M.delta(32,51,"!:").ignore()
+	M.delta(51,33,"Fcn").ignore()
+	M.delta(51,35,"cPu").ignore()
+	M.delta(51,36,"cPi").ignore()
+	M.delta(51,37,"cM").ignore()
 	
 	M.delta(34,5,"B").push("$")
 	M.delta(48,39,"El:").ignore()
@@ -203,10 +204,7 @@ end
 	M.delta(40,35,"cPu:").ignore()
 	M.delta(40,36,"cPi:").ignore()
 	M.delta(40,37,"cM:").ignore()
-	M.delta(40,33,"!:").ignore()
-	M.delta(40,35,"!:").ignore()
-	M.delta(40,36,"!:").ignore()
-	M.delta(40,37,"!:").ignore()
+	M.delta(40,51,"!:").ignore()
 	M.delta(18,41,"Do:").ignore()
 	M.delta(19,41,"Do:").ignore()
 	M.delta(20,41,"Do:").ignore()
