@@ -158,6 +158,7 @@ end
 	
 	
 	M.delta(5,32,"If:").ignore()
+	M.delta(32,51,"!:").ignore()
 	M.delta(32,33,"Fcn:").ignore()
 	M.delta(33,18,"n").ignore()
 	M.delta(33,19,"s").ignore()
@@ -181,6 +182,9 @@ end
 	M.delta(49,30,"Ch").ignore()
 	M.delta(30,34,"Th").ignore()
 	M.delta(29,34,"Th").ignore()
+	M.delta(30,41,"Do").ignore()
+	M.delta(29,41,"Do").ignore()
+	
 	
 	
 	M.delta(32,37,"cM:").ignore()
@@ -188,8 +192,10 @@ end
 	M.delta(37,47,"var").ignore()
 	M.delta(38,34,"Th:").ignore()
 	M.delta(47,34,"Th:").ignore()
+	M.delta(38,41,"Do").ignore()
+	M.delta(47,41,"Do").ignore()
 
-	M.delta(32,51,"!:").ignore()
+
 	M.delta(51,33,"Fcn").ignore()
 	M.delta(51,35,"cPu").ignore()
 	M.delta(51,36,"cPi").ignore()
@@ -200,11 +206,12 @@ end
 	M.delta(39,5,"B").push("$")
 	
 	M.delta(5,40,"Wh:").ignore()
+	M.delta(40,51,"!:").ignore()
 	M.delta(40,33,"Fcn:").ignore()
 	M.delta(40,35,"cPu:").ignore()
 	M.delta(40,36,"cPi:").ignore()
 	M.delta(40,37,"cM:").ignore()
-	M.delta(40,51,"!:").ignore()
+	
 	M.delta(18,41,"Do:").ignore()
 	M.delta(19,41,"Do:").ignore()
 	M.delta(20,41,"Do:").ignore()
@@ -217,7 +224,7 @@ end
 	M.delta(5,43,"tms:").ignore()
 	M.delta(43,44,"num").ignore()
 	M.delta(43,50,"var").ignore()
-	M.delta(47,48,"E").pop("$")
+	//M.delta(47,48,"E").pop("$")
 	M.delta(50,48,"E").pop("$")
 	M.delta(44,48,"E").pop("$")
 	M.delta(44,5,";").ignore()
